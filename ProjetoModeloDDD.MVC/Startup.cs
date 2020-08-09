@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ProjetoModeloDDD.Application;
+using ProjetoModeloDDD.Application.Interface;
+using ProjetoModeloDDD.Domain.Interfaces;
+using ProjetoModeloDDD.Domain.Services;
 using ProjetoModeloDDD.Infra.Data.Context;
+using ProjetoModeloDDD.Infra.Data.Repositories;
 
 namespace ProjetoModeloDDD.MVC
 {
@@ -35,9 +36,15 @@ namespace ProjetoModeloDDD.MVC
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.AddAutoMapper(typeof(Startup));
+
             services.AddDbContext<ProjetoModeloContext>(options =>
                 options.UseMySql(Configuration.GetConnectionString("ProjetoModeloContext"), builder =>
                 builder.MigrationsAssembly("ProjetoModeloDDD.Infra.Data")));
+
+            services.AddTransient<IClienteAppService, ClienteAppService>();
+            services.AddTransient<IClienteService, ClienteService>();
+            services.AddTransient<IClienteRepository, ClienteRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

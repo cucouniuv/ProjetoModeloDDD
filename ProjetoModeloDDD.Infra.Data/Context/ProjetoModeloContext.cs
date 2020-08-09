@@ -11,6 +11,11 @@ namespace ProjetoModeloDDD.Infra.Data.Context
 
         }
 
+        public ProjetoModeloContext() : base()
+        {
+
+        }
+
         public DbSet<Cliente> Clientes { get; set; }
 
         public DbSet<Produto> Produtos { get; set; }

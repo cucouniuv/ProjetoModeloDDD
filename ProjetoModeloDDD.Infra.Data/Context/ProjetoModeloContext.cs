@@ -12,5 +12,11 @@ namespace ProjetoModeloDDD.Infra.Data.Context
         }
 
         public DbSet<Cliente> Clientes { get; set; }
+
+        public DbSet<Produto> Produtos { get; set; }
+
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //}
     }
 }

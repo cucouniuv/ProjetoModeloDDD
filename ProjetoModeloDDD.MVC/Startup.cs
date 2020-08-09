@@ -8,10 +8,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ProjetoModeloDDD.Application;
 using ProjetoModeloDDD.Application.Interface;
+using ProjetoModeloDDD.Domain.Entities;
 using ProjetoModeloDDD.Domain.Interfaces;
 using ProjetoModeloDDD.Domain.Services;
 using ProjetoModeloDDD.Infra.Data.Context;
 using ProjetoModeloDDD.Infra.Data.Repositories;
+using ProjetoModeloDDD.MVC.Mappings;
+using ProjetoModeloDDD.MVC.ViewModels;
 
 namespace ProjetoModeloDDD.MVC
 {
@@ -36,11 +39,16 @@ namespace ProjetoModeloDDD.MVC
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddAutoMapper(typeof(Startup));
+            Mapper.Initialize(cfg => cfg.AddProfile<MappingProfile>());
+            services.AddAutoMapper();
 
-            services.AddDbContext<ProjetoModeloContext>(options =>
-                options.UseMySql(Configuration.GetConnectionString("ProjetoModeloContext"), builder =>
-                builder.MigrationsAssembly("ProjetoModeloDDD.Infra.Data")));
+            //services.AddAutoMapper(typeof(Startup));
+
+            //services.AddAutoMapper(typeof(Cliente), typeof(ClienteViewModel));
+
+            //services.AddDbContext<ProjetoModeloContext>(options =>
+            //    options.UseMySql(Configuration.GetConnectionString("ProjetoModeloContext"), builder =>
+            //    builder.MigrationsAssembly("ProjetoModeloDDD.Infra.Data")));
 
             services.AddTransient<IClienteAppService, ClienteAppService>();
             services.AddTransient<IClienteService, ClienteService>();

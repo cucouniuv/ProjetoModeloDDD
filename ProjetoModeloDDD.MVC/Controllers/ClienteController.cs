@@ -22,7 +22,6 @@ namespace ProjetoModeloDDD.MVC.Controllers
         // GET: Cliente
         public ActionResult Index()
         {
-            // passar o mapper
             var clienteViewModel =
                 _mapper.Map<IEnumerable<Cliente>, IEnumerable<ClienteViewModel>>(_clienteApp.GetAll());
 
